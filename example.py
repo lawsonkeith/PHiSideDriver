@@ -7,6 +7,7 @@
 # for info on GPIOZero
 #
 from gpiozero import PWMLED
+from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
 
 # IO Mapper class
@@ -53,10 +54,19 @@ HSD = HSD()
 # attach a LED to Output 6 on the board.
 # then PWM at 10Hz, cycle duty cycle then.
 #
-led = PWMLED(HSD.O6,True,0,10)
+output = PWMLED(HSD.O6,True,0,10)
+enable = LED(HSD.OE);
+run = LED(HSD.RUN);
 
+# enable outputs
+enable.on()
+
+# flash LED and drive output at variable rate 0-100% duty cycle 
 while True:
 	for b in range(100):
-    		led.value  = b / 100.0
-	    	sleep(1.01)
-		print(b/100.0)
+		# flash LED
+		run.blink()
+		# PWM to output
+		output.value  = b / 100.0
+		sleep(1)
+		print b, "% duty"
