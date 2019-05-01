@@ -157,6 +157,9 @@ while True:
 	sleep(5)
 	print "Done"
 	sleep(5)
+	
+	# Disable outputs
+	#
 	print "turning outputs off"
 	enable.off()
 	sleep(10)
