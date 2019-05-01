@@ -92,6 +92,8 @@ enable.on()
 
 # flash LED and drive output at variable rate 0-100% duty cycle 
 while True:
+	# rate toggle output 6
+	#
 	o6.value = 0;
 	print "pause at off"
 	sleep(5)
