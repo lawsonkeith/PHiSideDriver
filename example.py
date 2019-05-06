@@ -1,3 +1,4 @@
+#!/usr/bin/python
 #  example usage of PHiSideDriver PCB
 #  ==================================
 #
@@ -9,43 +10,7 @@
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
-
-# IO Mapper class, maps GPIO # to output numbers
-#
-class HSD(object):
-	# Map IO numbers to GPIO Numbers
-	O1 = 17
-	O2 = 15
-	O3 = 14
-	O4 = 4
-	O5 = 3
-	O6 = 2
-	O7 = 18
-	O8 = 27
-	O9 = 24
-	O10 = 10
-	O11 = 9
-	O12 = 25
-	O13 = 11
-	O14 = 8
-	O15 = 7
-	O16 = 5
-	O17 = 6
-	O18 = 12
-	O19 = 13
-	O20 = 19
-	O21 = 16
-	O22 = 26
-	O23 = 20
-	O24 = 21
- 	RUN = 22
-	OE = 23
-
-	def __setattr__(self, *_):
-		pass
-  
-HSD = HSD()
-
+from PiIO import PiIO_DO24_Mapper
 
 # @@@@ Example code here @@@@
 #
@@ -55,34 +20,38 @@ HSD = HSD()
 
 # @@@@ Hardware init @@@@
 #
-o1 = LED(HSD.O1); 
-o2 = LED(HSD.O2); 
-o3 = LED(HSD.O3); 
-o4 = LED(HSD.O4); 
-o5 = LED(HSD.O5); 
+io = PiIO_DO24_Mapper()
+o1 = LED(io.O1); 
+o2 = LED(io.O2); 
+o3 = LED(io.O3); 
+o4 = LED(io.O4); 
+o5 = LED(io.O5); 
 #o6 = LED(O6) 
-o6 = PWMLED(HSD.O6,True,0,1000);
-o7 = LED(HSD.O7); 
-o8 = LED(HSD.O8); 
-o9 = LED(HSD.O9); 
-o10 = LED(HSD.O10); 
-o11 = LED(HSD.O11); 
-o12 = LED(HSD.O12); 
-o13 = LED(HSD.O13); 
-o14 = LED(HSD.O14); 
-o15 = LED(HSD.O15); 
-o16 = LED(HSD.O16); 
-o17 = LED(HSD.O17); 
-o18 = LED(HSD.O18); 
-o19 = LED(HSD.O19); 
-o20 = LED(HSD.O20); 
-o21 = LED(HSD.O21); 
-o22 = LED(HSD.O22); 
-o23 = LED(HSD.O23); 
-o24 = LED(HSD.O24); 
+o6 = PWMLED(io.O6,True,0,1000);
+o7 = LED(io.O7); 
+o8 = LED(io.O8); 
+o9 = LED(io.O9); 
+o10 = LED(io.O10); 
+o11 = LED(io.O11); 
+o12 = LED(io.O12); 
+o13 = LED(io.O13); 
+o14 = LED(io.O14); 
+o15 = LED(io.O15); 
+o16 = LED(io.O16); 
+o17 = LED(io.O17); 
+o18 = LED(io.O18); 
+o19 = LED(io.O19); 
+o20 = LED(io.O20); 
+o21 = LED(io.O21); 
+o22 = LED(io.O22); 
+o23 = LED(io.O23); 
+o24 = LED(io.O24); 
 
-enable = LED(HSD.OE);
-run = LED(HSD.RUN);
+
+
+
+enable = LED(io.OE);
+run = LED(io.RUN);
 #
 # @@@@ END HW INIT @@@@
 
