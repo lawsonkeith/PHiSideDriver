@@ -98,3 +98,9 @@ _General_
 _Node red_
 * [sudo apt-get install node-red]
 
+sudo apt-get install -y i2c-tools
+i2cdetect -y 1
+pip3 install gpiozero
+pip3 install smbus
+http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/adc.inc.php
+
