@@ -1,16 +1,18 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #  example usage of PHiSideDriver PCB
 #  ==================================
 #
-#  K Lawson April 2019
+#  K Lawson May 2019
 # 
 #  see https://gpiozero.readthedocs.io/en/stable/recipes.html
 #  for info on GPIOZero
 #
+import concurrent.futures 
 from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
 from PiIO import PiIO_DO24_Mapper
+#import signal
 
 # @@@@ Example code here @@@@
 #
@@ -47,38 +49,42 @@ o22 = LED(io.O22);
 o23 = LED(io.O23); 
 o24 = LED(io.O24); 
 
-
-
-
 enable = LED(io.OE);
 run = LED(io.RUN);
 #
 # @@@@ END HW INIT @@@@
+	
 
-# Enable outputs
+
+# Main test loop
 #
-enable.on()
+def timed_task1():
 
-# flash LED and drive output at variable rate 0-100% duty cycle 
-while True:
+
+	# Enable outputs
+	#
+	enable.on()
+
+	# flash LED and drive output at variable rate 0-100% duty cycle 
+
 	# rate toggle output 6
 	#
 	o6.value = 0;
-	print "pause at off"
+	print("pause at off")
 	sleep(5)
 	for b in range(100):
 		# flash LED
 		sleep(.1)
-		run.toggle()
+		
 		# PWM to output
 		o6.value  = b / 100.0
-		print b, "% duty"
-	print "pause at full..."
+		print(b, "% duty")
+	print("pause at full...")
 	sleep(5)
-	
+
 	#  turn on all outputs in 5s steps...
 	#
-	print "turning all outputs on..."
+	print("turning all outputs on...")
 	o1.on()
 	sleep(5)
 	o2.on()
@@ -101,6 +107,7 @@ while True:
 	o11.on()
 	sleep(5)
 	o12.on()
+	print("12 on...")
 	sleep(5)
 	o13.on()
 	sleep(5)
@@ -126,13 +133,30 @@ while True:
 	sleep(5)
 	o24.on()
 	sleep(5)
-	print "Done"
+	print("Done")
 	sleep(5)
-	
+
 	# Disable outputs
 	#
-	print "turning outputs off"
+	print("turning outputs off")
 	enable.off()
 	sleep(10)
+	print("exit...")
 	
 	
+# Concurrent status loop
+#
+def timed_task2():
+	while True:
+		run.toggle()
+		sleep(.1)
+	
+# Submit parallel tasks to executor
+#
+executor = concurrent.futures.ThreadPoolExecutor(max_workers=2)
+a = executor.submit(timed_task1)
+b = executor.submit(timed_task2)
+# wait for 1at task to complete
+while a.done() is False:
+        pass
+

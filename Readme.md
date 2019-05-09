@@ -76,3 +76,25 @@ OE | 23
 A python example is provided to test PCB functionality.  This includes a class to handle the GPIO to output pin mapping.
 The example uses the GPIOZero library.
 
+
+#Tools
+
+_Concurrency_
+* pip3 python package manager [sudo apt-get install python-pip]
+* Python twisted for concurrency [sudo apt-get install python-twisted]
+ [TODO] 
+ some work here to get correct python packages to install...
+ sudo apt install python3-pip
+ sudo python3.5 -m pip install twisted
+ pip3 install service_identity
+
+
+_GPIO_
+* GPIOZero for pi [sudo apt install python3-gpiozero]
+
+_General_
+* gedit text editor  [sudo apt-get install gedit]
+
+_Node red_
+* [sudo apt-get install node-red]
+

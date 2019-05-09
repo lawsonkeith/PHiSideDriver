@@ -34,7 +34,7 @@ class PiIO_DO24_Mapper(object):
 	O22 = 26
 	O23 = 20
 	O24 = 21
- 	RUN = 22
+	RUN = 22
 	OE = 23
 
 	def __setattr__(self, *_):
@@ -69,7 +69,7 @@ class PiIO_DIO12_Mapper(object):
 	I10 = 26
 	I11 = 20
 	I12 = 21
- 	RUN = 22
+	RUN = 22
 	OE = 23
 
 	def __setattr__(self, *_):

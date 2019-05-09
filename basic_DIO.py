@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 #  example usage of PHiSideDriver PCB
 #  ==================================
 #
@@ -62,34 +62,34 @@ run = LED(io.RUN);
 enable.on()
 
 #
-print "Program to echo when input pins are pulled high"
-print "use 3V3 to 24V"
-print 
+print ("Program to echo when input pins are pulled high")
+print ("use 3V3 to 24V")
+print ()
 while True:
 	if  i1.value == 1:
-		print "i1 pressed"
+		print("i1 pressed")
 	if i2.value == 1:
-		print "i2 pressed"
+		print("i2 pressed")
 	if i3.value == 1:
-		print "i3 pressed"
+		print("i3 pressed")
 	if i4.value == 1:
-		print "i4 pressed"
+		print("i4 pressed")
 	if i5.value == 1:
-		print "i5 pressed"
+		print("i5 pressed")
 	if i6.value == 1:
-		print "i6 pressed"
+		print("i6 pressed")
 	if i7.value == 1:
-		print "i7 pressed"
+		print("i7 pressed")
 	if i8.value == 1:
-		print "i8 pressed"
+		print("i8 pressed")
 	if i9.value == 1:
-		print "i9 pressed"
+		print("i9 pressed")
 	if i10.value == 1:
-		print "i10 pressed"
+		print("i10 pressed")
 	if i11.value == 1:
-		print "i11 pressed"
+		print("i11 pressed")
 	if i12.value == 1:
-		print "i12 pressed"
+		print("i12 pressed")
 
 	sleep(1)
 	run.toggle()
