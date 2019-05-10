@@ -13,7 +13,18 @@ from gpiozero import PWMLED
 from gpiozero import LED 	# in GPIOZero outputs are called LEDs???
 from time import sleep
 from PiIO import PiIO_DO24_Mapper
-from ADS1x15 import ADS1015
+from PiIO import PiIO_Analog
+
+# Choose a gain of 1 for reading voltages from 0 to 4.09V.
+# Or pick a different gain to change the range of voltages that are read:
+#  - 2/3 = +/-6.144V
+#  -   1 = +/-4.096V
+#  -   2 = +/-2.048V
+#  -   4 = +/-1.024V
+#  -   8 = +/-0.512V
+#  -  16 = +/-0.256V
+# See table 3 in the ADS1015/ADS1115 datasheet for more info on gain.
+GAIN = 1
 
 # @@@@ Example code here @@@@
 #
@@ -41,14 +52,9 @@ from ADS1x15 import ADS1015
 #o14 = LED(io.O14); 
 #o15 = LED(io.O15); 
 #o16 = LED(io.O16); 
-adc = ADS1015()
-channel = 0
-gain = 1
-while True:
-	data = adc.read_adc(channel, gain)
-	print (channel,  "s:", data)
-	sleep(0.1)
-	channel += 1
 
-	if channel > 3:
-		channel = 0
+adc = PiIO_Analog(GAIN)
+for x in range(4):
+	data = adc.get_raw(x)
+	print (data)
+
