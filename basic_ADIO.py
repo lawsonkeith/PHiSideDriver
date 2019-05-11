@@ -54,7 +54,10 @@ GAIN = 1
 #o16 = LED(io.O16); 
 
 adc = PiIO_Analog(GAIN)
+
 for x in range(4):
-	data = adc.get_raw(x)
+	data = adc.get_raw(x)	
 	print (data)
+	temp = adc.get_temp()
+	print (temp)
 

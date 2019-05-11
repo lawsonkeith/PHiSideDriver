@@ -104,3 +104,4 @@ pip3 install gpiozero
 pip3 install smbus
 http://www.python-exemplary.com/index_en.php?inhalt_links=navigation_en.inc.php&inhalt_mitte=raspi/en/adc.inc.php
 
+sudo apt-get -y install python3-rpi.gpio
