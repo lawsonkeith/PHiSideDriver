@@ -61,16 +61,6 @@ RUN | 22
 OE | 23
 
 
-# Fault protection
-
-* Each ouput can hold 350mA and trip just above 500mA.  Between these values behavious is undefined.
-* When an output trips on overcurrent it remains off untill the Enable pin is cycled, only the pins on the devices that have overloaded will remain off.
-* The Fault LED indicates that a overcurrent or thermal shutdown has occured on one of the 8 drive ICs
-* For a thermal shutdown the entire device is shut down and all outputs are de-energised.
-* Thermally each IC can drive .8A in total over all 8 outputs at 24V DC @ 24 DegC.  
-* The board can therefore  drive up to 2.4A in total if spread correctly across the 3 driver ICs.
-
-
 # Software description
 
 A python example is provided to test PCB functionality.  This includes a class to handle the GPIO to output pin mapping.
