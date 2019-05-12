@@ -1,4 +1,3 @@
-
 #  example usage of PHiSideDriver PCB
 #  ==================================
 #
@@ -13,6 +12,65 @@ from ADS1x15 import ADS1015
 import max31865
 import time
 
+class PiIO_EMA:
+	alpha=0
+	average=0
+
+	def __init__(self,alpha):
+		self.alpha=alpha
+
+	def ema(self,current):
+		'''
+		Exponential moving average generator
+		http://en.wikipedia.org/wiki/Moving_average#Exponential_moving_average
+		Higher alpha discounts old results faster, alpha in range (0, 1).
+		'''
+		self.average = current * self.alpha + self.average * (1 - self.alpha)
+		return self.average
+
+# Really basic alarm function
+#
+class PiIO_Alarm:
+	amin=0
+	amax=0
+	alarm_st=False
+
+	def __init__(self,amin,amax):
+		self.amin=amin
+		self.amax=amax
+
+	def alarm(self,proc):
+		if(proc > self.amax):
+			self.alarm_st=True
+
+		if(proc < self.amin):
+			self.alarm_st=True
+	
+		return self.alarm_st
+
+	def ack(self):
+		self.alarm_st=False
+
+# really basic scale
+#
+class PiIO_Scale:
+	rmin=0
+	rmax=0
+	smin=0
+	smax=0
+	
+	def __init__(self,rmin,rmax,smin,smax):
+		self.rmin=rmin
+		self.rmax=rmax
+		self.smin=smin
+		self.smax=smax
+		
+	def scale(self,raw):
+		m = (self.smax-self.smin) / (self.rmax-self.rmin)
+		c = self.smax - (m * self.rmax) 
+		return raw * m + c
+		
+		
 # Rising edge detector
 #
 class PiIO_Redge:
@@ -62,15 +120,14 @@ class PiIO_TP:
 
 	def tp(self,state):
 		tc = time.time()
-		#print(tc)
+		# redge
+		if (self.last_state == 0 and state > 0):
+			self.end_time = tc + self.time_pulse
+
 		# pulse occring
 		if (self.end_time > tc):
 			self.last_state = state
 			return True
-
-		# redge
-		if (self.last_state == 0 and state > 0):
-			self.end_time = tc + self.time_pulse
 
 		self.last_state = state
 		return False
@@ -105,6 +162,41 @@ class PiIO_TON:
 
 		return False
 
+
+# If input high delay turn off by specified time
+#
+class PiIO_TOF:
+	last_state=0
+	# pulse length
+	time_delay=0
+	# end time
+	end_time=0
+
+	def __init__(self,state,time):
+		self.last_state = state
+		self.time_delay = time
+
+	def tof(self,state):
+		tc = time.time()
+
+		# fedge
+		if (self.last_state > 0 and state == 0):
+			self.end_time = tc + self.time_delay
+
+		self.last_state = state
+
+		# on conditions
+		if (state > 0):
+			return True
+
+		if( tc < self.end_time):
+			return True
+
+		return False
+
+
+
+
 class PiIO_Analog:
 	# GPIO Mapping
 	O1 = 5
@@ -128,15 +220,6 @@ class PiIO_Analog:
 	# Constants
 	gain = 1;
 	data = 0;
-	rmin = [0,0,0,0]
-	rmax = [0,0,0,0]
-	smax = [0,0,0,0]
-	smin = [0,0,0,0]
-	amin = [0,0,0,0]
-	amax = [0,0,0,0]
-	# Alarm latches
-	alarm = [0,0,0,0,0]
-	alarm = False
 
 	def __init__(self,gain):
 		self.adc = ADS1015()
